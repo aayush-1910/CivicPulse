@@ -1,8 +1,36 @@
 import axios from 'axios';
 import type { Category, Complaint, DashboardStats, Department, User } from '../types';
 
+// Robust formatting of API Base URL:
+// In production (Vercel), VITE_API_BASE_URL points to Railway (e.g. https://civicpulse-production.up.railway.app/api).
+// Handles cases where user omits https://, trailing slashes, or /api.
+const formatBaseUrl = (raw?: string): string => {
+  if (!raw) return '/api';
+  let url = raw.trim();
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    url = `https://${url}`;
+  }
+  url = url.replace(/\/+$/, '');
+  if (!url.endsWith('/api')) {
+    url = `${url}/api`;
+  }
+  return url;
+};
+
+export const API_BASE_URL = formatBaseUrl(import.meta.env.VITE_API_BASE_URL);
+
+export const getMediaUrl = (url?: string): string => {
+  if (!url) return '';
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  if (import.meta.env.VITE_API_BASE_URL) {
+    const origin = API_BASE_URL.replace(/\/api$/, '');
+    return `${origin}${url.startsWith('/') ? '' : '/'}${url}`;
+  }
+  return url;
+};
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: API_BASE_URL,
 });
 
 api.interceptors.request.use((config) => {

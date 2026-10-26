@@ -74,7 +74,7 @@ export function App() {
         ]);
         if (requestId !== requestSequence.current) return;
         setComplaints(selectedStatus === 'PENDING'
-          ? complaintsData.filter((complaint) => complaint.status === 'SUBMITTED' || complaint.status === 'UNDER_REVIEW')
+          ? complaintsData.filter((complaint: Complaint) => complaint.status === 'SUBMITTED' || complaint.status === 'UNDER_REVIEW')
           : complaintsData);
         setStats(statsData);
         setDepartments(deptData);

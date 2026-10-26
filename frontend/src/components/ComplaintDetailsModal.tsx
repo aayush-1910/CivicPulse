@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { Complaint, Department, ComplaintStatus, Priority, User } from '../types';
-import { complaintApi } from '../services/api';
+import { complaintApi, getMediaUrl } from '../services/api';
 import { StatusBadge } from './StatusBadge';
 import { PriorityBadge } from './PriorityBadge';
 import { LocationViewMap } from './LocationViewMap';
@@ -268,7 +268,7 @@ const ComplaintDetailsModalContent: React.FC<ContentProps> = ({
                   </h3>
                   <div className="rounded-lg overflow-hidden border border-[#E2E8F0] max-h-64 bg-slate-100">
                     <img
-                      src={activeComplaint.imageUrl}
+                      src={getMediaUrl(activeComplaint.imageUrl)}
                       alt="Complaint attachment"
                       className="w-full h-full object-contain max-h-64"
                     />

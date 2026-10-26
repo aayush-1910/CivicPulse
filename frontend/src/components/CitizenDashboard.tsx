@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import type { Complaint, ComplaintStatus, Category } from '../types';
 import { StatusBadge } from './StatusBadge';
 import { PriorityBadge } from './PriorityBadge';
+import { getMediaUrl } from '../services/api';
 import { PlusCircle, MapPin, Calendar, ChevronRight, Inbox, Search, Filter, History, Check } from 'lucide-react';
 
 interface Props {
@@ -213,7 +214,7 @@ export const CitizenDashboard: React.FC<Props> = ({
                     {c.imageUrl && (
                       <div className="w-full md:w-32 h-20 rounded-lg overflow-hidden bg-slate-100 shrink-0 border border-[#E2E8F0]">
                         <img
-                          src={c.imageUrl}
+                          src={getMediaUrl(c.imageUrl)}
                           alt="Reported problem"
                           className="w-full h-full object-cover"
                         />
